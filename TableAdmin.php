@@ -1,5 +1,4 @@
 <?php
-namespace Solid\Builder;
 class TableAdmin
 {
     private $table;
