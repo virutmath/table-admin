@@ -1,6 +1,7 @@
 {
     "name": "virutmath/table-admin",
     "type": "library",
+    "version" : "1.0.0"
     "description": "List record for backend",
     "keywords": ["table record","admin tool", "generate table"],
     "homepage": "https://github.com/virutmat/table-admin",
@@ -12,6 +13,9 @@
             "role": "Developer"
         }
     ],
+    "autoload": {
+        "files": ["TableAdmin.php"]
+    },
     "require": {
         "php": ">=5.3.0"
     }
