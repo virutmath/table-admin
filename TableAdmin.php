@@ -1,4 +1,5 @@
 <?php
+namespace virutmath\Solid\Builder;
 class TableAdmin
 {
     private $table;
