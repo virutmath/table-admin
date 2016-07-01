@@ -1,0 +1,18 @@
+{
+    "name": "virutmath/table-admin",
+    "type": "library",
+    "description": "List record for backend",
+    "keywords": ["table record","admin tool", "generate table"],
+    "homepage": "https://github.com/virutmat/table-admin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kien Trung Dang",
+            "email": "virutmath@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
