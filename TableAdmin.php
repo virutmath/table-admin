@@ -33,17 +33,17 @@ class TableAdmin
             $this->listRecord = $list;
             $this->i = 0;
         }
-        
+
         if ($config) {
             $this->extendAttributes($config, $this->config);//TODO must add config
             $this->setDefaultLink();
         }
     }
-    
+
     public static function initialize($list, $config = []) {
         return new TableAdmin($list,$config);
     }
-    
+
 
     private function setDefaultLink() {
         if($this->config['module']) {
@@ -51,11 +51,11 @@ class TableAdmin
             $this->deleteLink = '/admin/' . $this->config['module'] . '/delete';
         }
     }
-    
+
     public function setEditLink($pattern = '')
     {
         if(!$pattern) {
-            $pattern = '/admin/' . $this->config['module'] . '/edit/$' . $this->config['idField']; 
+            $pattern = '/admin/' . $this->config['module'] . '/edit/$' . $this->config['idField'];
         }
         $this->editLink = $pattern;
     }
@@ -332,7 +332,7 @@ class TableAdmin
                     break;
                 case 'delete':
                     $str .= '<td class="text-center">
-								<a href="#" class="deleteRecord" 
+								<a href="#" class="deleteRecord"
 								    data-id="' . $record_id . '"
 								    data-delete-url="'.$this->parseLink($this->deleteLink, $row_data).'">
 								<i class="fa fa-trash"></i></a>
@@ -341,7 +341,7 @@ class TableAdmin
                 case 'value':
                 default:
                     $td_class = '';
-                    if (is_numeric($value)) {
+                    if (is_numeric($value) && $type == 'number') {
                         $value = number_format($value);
                         $td_class = 'text-right';
                     }
