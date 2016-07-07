@@ -359,20 +359,22 @@ class TableAdmin
 	    if($string) {
 		    $arr = explode('|',$string);
 		    if(count($arr) == 2) {
-			    $fn = end($arr);
+			    $fn = $arr[1];
+			    $string = $arr[0];
 		    }
 	    }
-        $arr = explode('.', $string);
-        if ($arr) {
-            foreach ($arr as $property) {
-                $dataObject = property_exists($dataObject, $property) ? $dataObject->{$property} : '';
-                continue;
-            }
-        }
+	    $arr = explode('.', $string);
+	    if ($arr) {
+		    foreach ($arr as $property) {
+			    $dataObject = property_exists($dataObject, $property) ? $dataObject->{$property} : '';
+			    continue;
+		    }
+	    }
+
 	    if($fn && is_callable($fn)) {
 		    $dataObject = $fn($dataObject);
 	    }
-        return $dataObject;
+	    return $dataObject;
     }
 
     private function renderTable()
