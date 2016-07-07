@@ -354,6 +354,14 @@ class TableAdmin
 
     private function prepareFieldName($dataObject, $string = '')
     {
+	    //check if $string include callable function
+	    $fn = '';
+	    if($string) {
+		    $arr = explode('|',$string);
+		    if(count($arr) == 2) {
+			    $fn = end($arr);
+		    }
+	    }
         $arr = explode('.', $string);
         if ($arr) {
             foreach ($arr as $property) {
@@ -361,6 +369,9 @@ class TableAdmin
                 continue;
             }
         }
+	    if($fn && is_callable($fn)) {
+		    $dataObject = $fn($dataObject);
+	    }
         return $dataObject;
     }
 
