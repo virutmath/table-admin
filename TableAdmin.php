@@ -287,7 +287,7 @@ class TableAdmin
         $str = '<tr id="tableAdmin-tr-' . $record_id . '">';
         foreach ($this->arrayFieldShow as $key => $fieldName) {
             $type = $this->arrayFieldType[$key];
-            $value = !in_array($type, ['value', 'edit', 'delete']) ? $this->prepareFieldName($row_data, $fieldName) : $fieldName;
+            $value = !in_array($type, ['value', 'edit', 'delete', 'html']) ? $this->prepareFieldName($row_data, $fieldName) : $fieldName;
 
             switch ($type) {
                 case 'checkbox':
@@ -338,6 +338,9 @@ class TableAdmin
 								<i class="fa fa-trash"></i></a>
 							</td>';
                     break;
+	            case 'html':
+					$str .= '<td class="text-center">'.$value.'</td>';
+		            break;
                 case 'value':
                 default:
                     $td_class = '';
