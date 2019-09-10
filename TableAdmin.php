@@ -146,12 +146,13 @@ class TableAdmin
 
 	private function uriString()
 	{
-		return strtok($_SERVER['REQUEST_URI'], '?');
+	    $request_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+		return strtok($request_uri, '?');
 	}
 
 	private function queryString()
 	{
-		return $_SERVER['QUERY_STRING'];
+		return isset($_SERVER['QUERY_STRING'])? $_SERVER['QUERY_STRING'] :null;
 	}
 
 	private function parseQueryParams()
