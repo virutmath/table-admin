@@ -251,7 +251,7 @@ class TableAdmin
         foreach ($this->arrayFieldShow as $i => $field) {
             if ($this->arrayFieldSearch[$i]) {
                 $input_name = $this->arrayFieldSearchLike[$i] ? self::SEARCH_LIKE_FIELD_PREFIX . $field : self::SEARCH_FIELD_PREFIX . $field;
-                $value = $_GET[$input_name];
+                $value = $this->retrieveInput($input_name);
                 $value = $value ?: '';
                 $str .= '<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">';
                 if ($this->arrayFieldType[$i] == 'dropdown' || $this->arrayFieldType[$i] == 'search_dropdown') {
@@ -477,8 +477,8 @@ class TableAdmin
     private function addSort($column_key)
     {
         if ($this->arraySortable[$column_key]) {
-            $sort_by = $_GET[self::SORT_BY_FIELD];
-            $current_sort_type = $_GET[self::SORT_TYPE_FIELD];
+            $sort_by = $this->retrieveInput(self::SORT_BY_FIELD);
+            $current_sort_type = $this->retrieveInput(self::SORT_TYPE_FIELD);
             $current_sort_type = strtolower($current_sort_type);
             $current_sort_type = $current_sort_type == 'asc' ? 'desc' : 'asc';
             $sortField = is_string($this->arraySortable[$column_key])
@@ -785,5 +785,10 @@ class TableAdmin
             'title' => '',
             'class' => ''
         ];
+    }
+
+    private function retrieveInput($key, $default = null){
+        if(isset($_REQUEST[$key])) return $_REQUEST[$key];
+        else return $default;
     }
 }
