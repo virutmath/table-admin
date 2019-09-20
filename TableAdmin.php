@@ -220,7 +220,7 @@ class TableAdmin
                     break;
                 case 2:
                 case 'dropdown':
-                    $options = $search['placeholder'] ? '<option> -- '.$search['placeholder'].' -- </option>' : '';
+                    $options = $search['placeholder'] ? '<option value=""> -- '.$search['placeholder'].' -- </option>' : '';
                     foreach ($search['value'] as $k => $v) {
                         $options .= '<option value="' . $k . '" ' . ($value !== null && $value !== '' && $value == $k ? 'selected' : '') . ' >' . $v . '</option>';
                     }
