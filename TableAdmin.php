@@ -220,7 +220,7 @@ class TableAdmin
                 case 2:
                     $options = '';
                     foreach ($search['value'] as $k => $v) {
-                        $options .= '<option value="' . $k . '" ' . ($value !== '' && $value == $k ? 'selected' : '') . ' >' . $v . '</option>';
+                        $options .= '<option value="' . $k . '" ' . ($value !== null && $value !== '' && $value == $k ? 'selected' : '') . ' >' . $v . '</option>';
                     }
                     $str .= '<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
 <select class="form-control tableAdmin-csearch select2" name="' . $controlName . '">' . $options . '</select>
