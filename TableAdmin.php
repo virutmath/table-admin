@@ -210,7 +210,7 @@ class TableAdmin
         $str = $count_input_search > 6 ? '<div class="row form-group">' : '';
         foreach ($this->arrayCustomSearch as $field => $search) {
             $controlName = $search['like'] ? TableAdmin::SEARCH_LIKE_FIELD_PREFIX . $field : TableAdmin::SEARCH_FIELD_PREFIX . $field;
-            $value = get_instance()->input->get($controlName, true);
+            $value = $this->retrieveInput($controlName,null);
             switch ($search['type']) {
                 case 1:
                     $str .= '<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
