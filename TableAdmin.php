@@ -182,9 +182,9 @@ class TableAdmin
      * @param bool $searchLike
      * @return $this
      */
-    public function addSearch($field, $type, $defaultValue = null, $searchLike = false)
+    public function addSearch($field, $type, $defaultValue = null, $searchLike = false, $placeholder = '')
     {
-        $this->arrayCustomSearch[$field] = ['value' => $defaultValue, 'type' => $type, 'like' => $searchLike];
+        $this->arrayCustomSearch[$field] = ['value' => $defaultValue, 'type' => $type, 'like' => $searchLike, 'placeholder'=>$placeholder];
 
         return $this;
     }
@@ -213,12 +213,14 @@ class TableAdmin
             $value = $this->retrieveInput($controlName,null);
             switch ($search['type']) {
                 case 1:
+                case 'string':
                     $str .= '<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
-<input type="text" class="form-control tableAdmin-csearch" name="' . $controlName . '" value="' . $value . '" placeholder="' . $search['value'] . '">
+<input type="text" class="form-control tableAdmin-csearch" name="' . $controlName . '" value="' . $value . '" placeholder="' . $search['placeholder'] . '">
 </div>';
                     break;
                 case 2:
-                    $options = '';
+                case 'dropdown':
+                    $options = $search['placeholder'] ? '<option> -- '.$search['placeholder'].' -- </option>' : '';
                     foreach ($search['value'] as $k => $v) {
                         $options .= '<option value="' . $k . '" ' . ($value !== null && $value !== '' && $value == $k ? 'selected' : '') . ' >' . $v . '</option>';
                     }
@@ -227,6 +229,7 @@ class TableAdmin
 </div>';
                     break;
                 case 3: //date picker
+                case 'date_picker':
                     $str .= '<div class="col-lg-2 col-md-4 col-sm-6 col-xs-12">
 <input type="text" class="datepicker2 form-control tableAdmin-csearch" name="' . $controlName . '" value="' . $value . '" placeholder="' . $search['value'] . '">
 </div>';
