@@ -3,6 +3,8 @@
 namespace virutmath\Solid\Builder;
 
 
+use Illuminate\Support\Str;
+
 class TableAdmin
 {
     const ADMIN_PATH = 'admin';
@@ -10,13 +12,17 @@ class TableAdmin
     private $listRecord = [];
     private $config = [
         'show' => [
-            'id' => true
+            'id' => true,
+            'rowSave'=>true,
         ],
         'formatDate' => 'd/m/Y',
         'defaultOptionLabel' => '',
         'pageSize' => 30,
         'module' => '',
         'idField' => 'id',
+        'rowClass'=>'tableAdmin-tr',
+        'rowIdPrefix'=>'tableAdmin-tr-',
+        'quickEdit'=>true,
     ];
     private $editLink;
     private $deleteLink;
@@ -453,7 +459,7 @@ class TableAdmin
         $params = [];
         if ($exp) {
             foreach ($exp as $section) {
-                if (starts_with($section, '$')) {
+                if (Str::startsWith($section, '$')) {
                     $params[] = $section;
                 }
             }
@@ -649,7 +655,7 @@ class TableAdmin
             foreach ($arr as $property) {
                 $propertyArr = explode('*', $property);
                 if (is_object($dataObject)) {
-                    $dataObject = property_exists($dataObject, $propertyArr[0]) || $dataObject->{$propertyArr[0]} ? $dataObject->{$propertyArr[0]} : '';
+                    $dataObject = isset($dataObject, $propertyArr[0]) || $dataObject->{$propertyArr[0]} ? $dataObject->{$propertyArr[0]} : '';
                 } elseif (is_array($dataObject)) {
                     $dataObject = isset($dataObject[$propertyArr[0]]) ? $dataObject[$propertyArr[0]] : '';
                 }
@@ -677,7 +683,7 @@ class TableAdmin
         $this->table .= '<tbody>';
         if ($this->listRecord) {
             foreach ($this->listRecord as $i => $record) {
-                if (property_exists($record, 'id')) {
+                if (isset($record->id)) {
                     $id = $record->id;
                 } else {
                     $id = $i;
