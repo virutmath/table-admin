@@ -23,6 +23,7 @@ class TableAdmin
         'rowClass'=>'tableAdmin-tr',
         'rowIdPrefix'=>'tableAdmin-tr-',
         'quickEdit'=>true,
+        'deleteFn'=>null,
     ];
     private $editLink;
     private $deleteLink;
@@ -480,7 +481,7 @@ class TableAdmin
             $str .= '<th class="text-center" style="width:40px"><input type="checkbox" class="checkbox-all iCheck" id="checkbox-all"></th>';
         }
         if($this->config['show']['rowSave']){
-            $str .= '<th class="text-center" style="width:40px"><i class="fa fa-save"></i></th>';
+            $str .= '<th class="text-center" style="width:40px"><i class="fa fa-save" style="cursor: pointer;"></i></th>';
         }
 
         foreach ($this->arrayLabel as $key => $label) {
@@ -527,7 +528,7 @@ class TableAdmin
                 ]) . '</td>';
         }
         if($this->config['show']['rowSave']){
-            $str .= '<td class="text-center"><i class="fa fa-save text-green"></i></td>';
+            $str .= '<td class="text-center"><i class="fa fa-save text-green" style="cursor: pointer;"></i></td>';
         }
 
         return $str;
@@ -606,6 +607,16 @@ class TableAdmin
                     break;
                 case 'delete':
                     $align_default = $align ? $align : 'center';
+
+                    $deleteFn = '';
+                    if($this->config['deleteFn']) {
+                        $fn = $this->config['deleteFn'][0];
+                        $params = $this->parseJSParams($row_data, $this->config['deleteFn'][1], $this->config['deleteFn'][2]);
+                        if(!$params) {
+                            $params = 'this,event';
+                        }
+                        $deleteFn = ' onclick="' . $fn .'.apply(this,['.$params.'])"';
+                    }
 
                     $str .= '<td class="text-' . $align_default . '">
 								<a href="#" class="deleteRecord"
@@ -811,5 +822,18 @@ class TableAdmin
     private function retrieveInput($key, $default = null){
         if(isset($_REQUEST[$key])) return $_REQUEST[$key];
         else return $default;
+    }
+
+    private function parseJSParams($dataObject, $pattern = '', $list_properties = []){
+        //pattern example:
+        // ---      this, object, variable...
+        // ---      $id, '$string',...
+        if(!$pattern) {
+            return '';
+        }
+        foreach ($list_properties as $property){
+            $pattern = str_replace('$'.$property, $dataObject->$property,$pattern);
+        }
+        return $pattern;
     }
 }
