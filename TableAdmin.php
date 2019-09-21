@@ -475,7 +475,14 @@ class TableAdmin
 
     private function th()
     {
-        $str = $this->config['show']['id'] ? '<thead><tr><th class="text-center" style="width:40px"><input type="checkbox" class="checkbox-all iCheck" id="checkbox-all"></th>' : '<thead><tr>';
+        $str = '<thead><tr>';
+        if($this->config['show']['id']){
+            $str .= '<th class="text-center" style="width:40px"><input type="checkbox" class="checkbox-all iCheck" id="checkbox-all"></th>';
+        }
+        if($this->config['show']['rowSave']){
+            $str .= '<th class="text-center" style="width:40px"><i class="fa fa-save"></i></th>';
+        }
+
         foreach ($this->arrayLabel as $key => $label) {
             $str .= '<th class="text-center bg-primary" style="vertical-align: middle">' . $label . ' ' . $this->addSort($key) . '</th>';
         }
@@ -509,21 +516,26 @@ class TableAdmin
 
     private function start_tr($record_id)
     {
-        if (!$this->config['show']['id']) return '';
-        $str = '<td class="text-center">' . $this->generateCheckbox([
-                'name' => 'row-checkbox-' . $record_id,
-                'id' => 'row-checkbox-' . $record_id,
-                'data-id' => $record_id,
-                'class' => 'form-control iCheck row-checkbox',
-                'value' => 0
-            ]) . '</td>';
+        $str = '';
+        if ($this->config['show']['id']){
+            $str .= '<td class="text-center">' . $this->generateCheckbox([
+                    'name' => 'row-checkbox-' . $record_id,
+                    'id' => 'row-checkbox-' . $record_id,
+                    'data-id' => $record_id,
+                    'class' => 'form-control iCheck row-checkbox',
+                    'value' => 0
+                ]) . '</td>';
+        }
+        if($this->config['show']['rowSave']){
+            $str .= '<td class="text-center"><i class="fa fa-save text-green"></i></td>';
+        }
 
         return $str;
     }
 
     private function tr($row_data, $record_id)
     {
-        $str = '<tr id="tableAdmin-tr-' . $record_id . '" data-id="' . $record_id . '">';
+        $str = '<tr class="'.$this->config['rowClass'].'" id="' . $this->config['rowIdPrefix'] . $record_id . '" data-id="' . $record_id . '">';
         $str .= $this->start_tr($record_id);
         foreach ($this->arrayFieldShow as $key => $fieldName) {
             $type = $this->arrayFieldType[$key];
