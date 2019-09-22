@@ -620,6 +620,7 @@ class TableAdmin
 
                     $str .= '<td class="text-' . $align_default . '">
 								<a href="#" class="deleteRecord"
+								    '.$deleteFn.'
 								    data-id="' . $record_id . '"
 								    data-delete-url="' . $this->parseLink($this->deleteLink, $row_data) . '">
 								<i class="fa fa-trash"></i></a>
